@@ -17,6 +17,7 @@ class PythonInterpreterPlugin(PluginInterface):
         Execute the given python code return the result from stdout. The result of execution of the code must printed on stdout at the end of the execution. Please print result on stdout.
         The code is executed in a docker container with python 3.8.5. 
         BeautifulSoup4 is installed in the container.
+        Sympy 1.12 is installed in the container to support symbolic math.
         """
 
     def get_parameters(self) -> Dict:
@@ -31,7 +32,7 @@ class PythonInterpreterPlugin(PluginInterface):
             "properties": {
                 "code": {
                     "type": "string",
-                    "description": "Python code which needs to be executed. The result of execution of the code must printed on stdout. Please print result on stdout."
+                    "description": "Python code which needs to be executed. The code MUST print the result on stdout."
                 }
             }
         }

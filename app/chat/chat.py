@@ -16,6 +16,8 @@ SYSTEM_PROMPT = """
     functions provided to you.
     NEVER make up an answer if you don't know, just respond
     with "I don't know" when you don't know.
+
+    If you use the python interpreter plugin, you MUST print the result on stdout at the end of the execution.
 """
 
 
@@ -138,6 +140,12 @@ class ChatSession:
                 "name": func_name,
             }
         )
+        # Store the plugin response in the conversation history
+        self.conversation.conversation_history.append({
+            "role": "system",
+            "content": f"Response from plugin {func_name}: {plugin_response}"
+        })
+
         next_chatgpt_response = self._chat_completion_request(messages)
 
         # If ChatGPT is asking for another function call, then
