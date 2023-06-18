@@ -1,4 +1,5 @@
-from .plugin import PluginInterface
+from app.chat.plugins.plugin import PluginInterface
+
 from typing import Dict, Optional
 import requests
 import os

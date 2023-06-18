@@ -4,10 +4,9 @@ import json
 from typing import List, Dict
 import uuid
 from .plugins.plugin import PluginInterface
-from .plugins.websearch import WebSearchPlugin
-from .plugins.webscraper import WebScraperPlugin
-from .plugins.pythoninterpreter import PythonInterpreterPlugin
-from .plugins.weatherapi import WeatherPlugin
+import yaml
+import importlib.util
+import os 
 
 GPT_MODEL = "gpt-3.5-turbo-16k-0613"
 SYSTEM_PROMPT = """
@@ -46,11 +45,34 @@ class ChatSession:
         self.session_id = str(uuid.uuid4())
         self.conversation = Conversation()
         self.plugins: Dict[str, PluginInterface] = {}
- #       self.register_plugin(WebSearchPlugin())
-        self.register_plugin(WeatherPlugin())
-        self.register_plugin(WebScraperPlugin())
-        self.register_plugin(PythonInterpreterPlugin())
+        self.load_plugins()
         self.conversation.add_message("system", SYSTEM_PROMPT)
+
+    def load_plugins(self):
+        """
+        Load plugins from the plugins subdirectory.
+        """
+        plugins_dir = os.path.join(os.path.dirname(__file__), "plugins")
+        for root, dirs, files in os.walk(plugins_dir):
+            if "manifest.yml" in files:
+                with open(os.path.join(root, "manifest.yml"), "r") as f:
+                    manifest = yaml.safe_load(f)
+                    if not manifest.get('plugin', {}).get('disabled', False):
+                        self._import_plugin(manifest['plugin'], root)
+
+    def _import_plugin(self, plugin_manifest, plugin_dir):
+        """
+        Dynamically import a plugin and register it.
+        """
+        spec = importlib.util.spec_from_file_location(
+            plugin_manifest['main'].replace('.py', ''),
+            os.path.join(plugin_dir, plugin_manifest['main'])
+        )
+        plugin_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(plugin_module)
+        plugin_class = getattr(plugin_module, plugin_manifest['class'])
+        self.register_plugin(plugin_class())        
+
 
     def register_plugin(self, plugin: PluginInterface):
         """

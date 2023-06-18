@@ -1,0 +1,7 @@
+plugin:
+  name: weather
+  version: 1.0.0
+  description: Weather plugin for the chat app
+  main: weatherapi.py
+  class: WeatherPlugin
+  disabled: false

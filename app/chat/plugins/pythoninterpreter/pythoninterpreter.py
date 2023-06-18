@@ -1,9 +1,8 @@
-from .plugin import PluginInterface
+from app.chat.plugins.plugin import PluginInterface
 from typing import Dict
 from io import StringIO
 import sys
 import traceback
-
 
 
 class PythonInterpreterPlugin(PluginInterface):
