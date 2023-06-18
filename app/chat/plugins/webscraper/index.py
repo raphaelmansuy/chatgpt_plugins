@@ -1,4 +1,4 @@
-from .plugin import PluginInterface
+from app.chat.plugins.plugin import PluginInterface
 from typing import Dict
 import requests
 from bs4 import BeautifulSoup

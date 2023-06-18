@@ -5,7 +5,7 @@ import sys
 import traceback
 
 
-class PythonInterpreterPlugin(PluginInterface):
+class SamplePlugin(PluginInterface):
     def get_name(self) -> str:
         """
         return the name of the plugin (should be snake case)

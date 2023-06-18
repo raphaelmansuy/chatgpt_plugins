@@ -6,7 +6,7 @@ import uuid
 from .plugins.plugin import PluginInterface
 import yaml
 import importlib.util
-import os 
+import os
 
 GPT_MODEL = "gpt-3.5-turbo-16k-0613"
 SYSTEM_PROMPT = """
@@ -71,13 +71,14 @@ class ChatSession:
         plugin_module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(plugin_module)
         plugin_class = getattr(plugin_module, plugin_manifest['class'])
-        self.register_plugin(plugin_class())        
-
+        self.register_plugin(plugin_class())
 
     def register_plugin(self, plugin: PluginInterface):
         """
         Register a plugin for use in this session
         """
+        # log the name of the plugins using a logger component
+        print(f"Registering plugin: {plugin.get_name()}")
         self.plugins[plugin.get_name()] = plugin
 
     def get_messages(self) -> List[Dict]:
@@ -119,7 +120,8 @@ class ChatSession:
             plugin = self.plugins[func_name]
             plugin_response = plugin.execute(**arguments)
         else:
-            plugin_response = {"error": f"No plugin found with name {func_name}"}
+            plugin_response = {
+                "error": f"No plugin found with name {func_name}"}
 
         # We need to pass the plugin response back to ChatGPT
         # so that it can process it. In order to do this we

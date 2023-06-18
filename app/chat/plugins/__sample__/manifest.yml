@@ -1,0 +1,7 @@
+plugin:
+  name: sample_plugin
+  version: 1.0.0
+  description: A sample plugin for the chat app
+  main: index.py
+  class: SamplePlugin
+  disabled: true

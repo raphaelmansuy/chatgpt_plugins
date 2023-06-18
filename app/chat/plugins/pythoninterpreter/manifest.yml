@@ -2,6 +2,6 @@ plugin:
   name: pythoninterpreter
   version: 1.0.0
   description: Python interpreter plugin for the chat app
-  main: pythoninterpreter.py
+  main: index.py
   class: PythonInterpreterPlugin
   disabled: false
