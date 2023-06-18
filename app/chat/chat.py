@@ -8,7 +8,8 @@ import yaml
 import importlib.util
 import os
 
-GPT_MODEL = "gpt-3.5-turbo-16k-0613"
+GPT_MODEL = "gpt-3.5-turbo-0613"  # "gpt-3.5-turbo-16k-0613"
+
 SYSTEM_PROMPT = """
     You are a helpful AI assistant. You answer the user's queries.
     When you are not sure of an answer, you take the help of
