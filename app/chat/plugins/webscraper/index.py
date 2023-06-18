@@ -13,7 +13,7 @@ class WebScraperPlugin(PluginInterface):
         return "webscraper"
     
     def get_description(self) -> str:
-        return "Extracts the content of the web page at the given URL"
+        return "Extracts the content of the web page at the given URL in plain text. No HTML tags."
     
 
     def get_parameters(self) -> Dict:

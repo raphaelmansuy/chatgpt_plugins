@@ -4,4 +4,4 @@ plugin:
   description: A Web Scraper plugin for the chat app
   main: index.py
   class: WebScraperPlugin
-  disabled: true
+  disabled: false

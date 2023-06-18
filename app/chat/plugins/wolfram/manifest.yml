@@ -1,0 +1,7 @@
+plugin:
+  name: wolfram
+  version: 1.0.0
+  description: A sample plugin for wolfram
+  main: index.py
+  class: WolframAlphaPlugin
+  disabled: true

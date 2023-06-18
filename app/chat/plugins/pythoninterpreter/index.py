@@ -14,10 +14,16 @@ class PythonInterpreterPlugin(PluginInterface):
 
     def get_description(self) -> str:
         return """
-        Execute the given python code return the result from stdout. The result of execution of the code must printed on stdout at the end of the execution. Please print result on stdout.
-        The code is executed in a docker container with python 3.8.5. 
-        BeautifulSoup4 is installed in the container.
-        Sympy 1.12 is installed in the container to support symbolic math.
+        This plugin executes the provided Python code within a Docker container, leveraging Python version 3.8.5.
+       
+        The python code MUST ALWAYS print the result on stdout at the end of the execution with print(result). 
+
+        If not print result is provided, the plugin will return an error.
+
+        It guarantees the return of execution results via stdout, ensuring easy accessibility and readability of the output.
+       
+        The environment within the Docker container comes pre-installed with BeautifulSoup4 for parsing HTML and XML documents, and Sympy 1.12 for conducting symbolic mathematical computations.
+        At the completion of the code execution, the resultant output will be printed to stdout using the print(result) command. This ensures that the outcome of your Python code is always displayed, facilitating immediate access and review
         """
 
     def get_parameters(self) -> Dict:
@@ -32,7 +38,7 @@ class PythonInterpreterPlugin(PluginInterface):
             "properties": {
                 "code": {
                     "type": "string",
-                    "description": "Python code which needs to be executed. The code MUST print the result on stdout."
+                    "description": "Python code which needs to be executed. The python code MUST ALWAYS print the result on stdout at the end of the execution with print(result). If no print result is provided, the plugin will return an error."
                 }
             }
         }
