@@ -44,14 +44,14 @@ class PythonInterpreterPlugin(PluginInterface):
         }
         return parameters
 
-
     def execute(self, **kwargs) -> Dict:
         client = docker.from_env()
         code = kwargs['code']
 
         # read the requirements in the current directory
         # to calculate the current directory with can use the current file (__file__) path
-        pathRequirements = os.path.join(os.path.dirname(__file__), "requirements.txt")
+        pathRequirements = os.path.join(
+            os.path.dirname(__file__), "requirements.txt")
 
         print(pathRequirements)
 
@@ -60,19 +60,17 @@ class PythonInterpreterPlugin(PluginInterface):
             with open(pathRequirements) as f:
                 requirements = f.read()
 
-
         # print requirements if present
         if requirements:
             print("Requirements:")
             print(requirements)
-        else: 
+        else:
             print("No requirements.txt found")
 
         # print code if present
         if code:
             print("Code:")
-            print(code)    
-
+            print(code)
 
         # Create temporary files for code and requirements
         with tempfile.NamedTemporaryFile(suffix=".py", delete=False) as temp_code, \
